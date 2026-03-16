@@ -11,6 +11,7 @@ interface BookRequest {
 
 function App() {
 
+  // Controlled Form State
   const [studentName, setStudentName] = useState<string>("");
   const [studentId, setStudentId] = useState<string>("");
   const [bookTitle, setBookTitle] = useState<string>("");
@@ -19,12 +20,14 @@ function App() {
 
   const [submittedRequests, setSubmittedRequests] = useState<BookRequest[]>([]);
 
+  // Uncontrolled Form Refs
   const nameRef = useRef<HTMLInputElement>(null);
   const idRef = useRef<HTMLInputElement>(null);
   const titleRef = useRef<HTMLInputElement>(null);
   const authorRef = useRef<HTMLInputElement>(null);
   const reasonRef = useRef<HTMLTextAreaElement>(null);
 
+  // Controlled Submit
   const handleControlledSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -50,6 +53,7 @@ function App() {
     setReason("");
   };
 
+  // Uncontrolled Submit
   const handleUncontrolledSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -74,134 +78,137 @@ function App() {
   };
 
   return (
-    <div className="container mt-4">
+    <div className="mt-4">
 
       <h1 className="mb-4">Library Book Request Form</h1>
 
       {/* Controlled Form */}
-      <h2>Controlled Form Book Request</h2>
-      <form onSubmit={handleControlledSubmit}>
-        <div className="mb-3">
-          <label className="form-label">Student Name</label>
-          <input
-            type="text"
-            className="form-control"
-            value={studentName}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              setStudentName(e.target.value)
-            }
-          />
-        </div>
+      <div className="p-4 mb-4">
 
-        <div className="mb-3">
-          <label className="form-label">Student ID</label>
-          <input
-            type="text"
-            className="form-control"
-            value={studentId}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              setStudentId(e.target.value)
-            }
-          />
-        </div>
+        <h2 className="mb-3">Controlled Book Request Form</h2>
+        <form onSubmit={handleControlledSubmit}>
 
-        <div className="mb-3">
-          <label className="form-label">Book Title</label>
-          <input
-            type="text"
-            className="form-control"
-            value={bookTitle}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              setBookTitle(e.target.value)
-            }
-          />
-        </div>
+          <div className="mb-3">
+            <label className="form-label">Student Name</label>
+            <input
+              type="text"
+              className="form-control"
+              value={studentName}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setStudentName(e.target.value)
+              }
+            />
+          </div>
 
-        <div className="mb-3">
-          <label className="form-label">Author</label>
-          <input
-            type="text"
-            className="form-control"
-            value={author}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              setAuthor(e.target.value)
-            }
-          />
-        </div>
+          <div className="mb-3">
+            <label className="form-label">Student ID</label>
+            <input
+              type="text"
+              className="form-control"
+              value={studentId}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setStudentId(e.target.value)
+              }
+            />
+          </div>
 
-        <div className="mb-3">
-          <label className="form-label">Reason for Request</label>
-          <textarea
-            className="form-control"
-            value={reason}
-            onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-              setReason(e.target.value)
-            }
-          />
-        </div>
+          <div className="mb-3">
+            <label className="form-label">Book Title</label>
+            <input
+              type="text"
+              className="form-control"
+              value={bookTitle}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setBookTitle(e.target.value)
+              }
+            />
+          </div>
 
-        <button type="submit" className="btn btn-primary">
-          Submit Request
-        </button>
+          <div className="mb-3">
+            <label className="form-label">Author</label>
+            <input
+              type="text"
+              className="form-control"
+              value={author}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setAuthor(e.target.value)
+              }
+            />
+          </div>
 
-      </form>
+          <div className="mb-3">
+            <label className="form-label">Reason for Request</label>
+            <textarea
+              className="form-control"
+              value={reason}
+              onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
+                setReason(e.target.value)
+              }
+            />
+          </div>
+
+          <button type="submit" className="btn btn-primary">
+            Submit Request
+          </button>
+
+        </form>
+      </div>
 
       {/* Display Submitted Requests */}
-
       {submittedRequests.length > 0 && (
-        <div className="mt-4">
-          <h3>Submitted Requests</h3>
+        <div className="p-4 mb-4">
+
+          <h3>Submitted Book Requests</h3>
 
           {submittedRequests.map((req, index) => (
-            <div key={index} className="border p-3 mb-3">
-              <p><strong>Name:</strong> {req.studentName}</p>
-              <p><strong>ID:</strong> {req.studentId}</p>
-              <p><strong>Book:</strong> {req.bookTitle}</p>
-              <p><strong>Author:</strong> {req.author}</p>
-              <p><strong>Reason:</strong> {req.reason}</p>
+            <div key={index} className="p-3 mb-3">
+
+              <p><strong>Name:</strong> <span>{req.studentName}</span></p>
+              <p><strong>ID:</strong> <span>{req.studentId}</span></p>
+              <p><strong>Book:</strong> <span>{req.bookTitle}</span></p>
+              <p><strong>Author:</strong> <span>{req.author}</span></p>
+              <p><strong>Reason:</strong> <span>{req.reason}</span></p>
+
             </div>
           ))}
 
         </div>
       )}
 
-      <hr className="my-5" />
-
       {/* Uncontrolled Form */}
-      <h2>Uncontrolled Form</h2>
-      <form onSubmit={handleUncontrolledSubmit}>
-        
-        <div className="mb-3">
-          <label className="form-label">Student Name</label>
-          <input type="text" className="form-control" ref={nameRef} />
-        </div>
+      <div className="p-4">
 
-        <div className="mb-3">
-          <label className="form-label">Student ID</label>
-          <input type="text" className="form-control" ref={idRef} />
-        </div>
+        <h2 className="mb-3">Uncontrolled Book Request Form</h2>
+        <form onSubmit={handleUncontrolledSubmit}>
 
-        <div className="mb-3">
-          <label className="form-label">Book Title</label>
-          <input type="text" className="form-control" ref={titleRef} />
-        </div>
+          <div className="mb-3">
+            <label className="form-label">Student Name</label>
+            <input type="text" className="form-control" ref={nameRef} />
+          </div>
 
-        <div className="mb-3">
-          <label className="form-label">Author</label>
-          <input type="text" className="form-control" ref={authorRef} />
-        </div>
+          <div className="mb-3">
+            <label className="form-label">Student ID</label>
+            <input type="text" className="form-control" ref={idRef} />
+          </div>
 
-        <div className="mb-3">
-          <label className="form-label">Reason for Request</label>
-          <textarea className="form-control" ref={reasonRef} />
-        </div>
+          <div className="mb-3">
+            <label className="form-label">Book Title</label>
+            <input type="text" className="form-control" ref={titleRef} />
+          </div>
 
-        <button type="submit" className="btn btn-secondary">
-          Submit Request
-        </button>
+          <div className="mb-3">
+            <label className="form-label">Author</label>
+            <input type="text" className="form-control" ref={authorRef} />
+          </div>
 
-      </form>
+          <div className="mb-3">
+            <label className="form-label">Reason for Request</label>
+            <textarea className="form-control" ref={reasonRef} />
+          </div>
 
+          <button type="submit" className="btn btn-secondary">Submit Request</button>
+        </form>
+      </div>
     </div>
   );
 }
